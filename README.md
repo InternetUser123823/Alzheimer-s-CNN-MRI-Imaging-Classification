@@ -54,7 +54,7 @@ Note that this table only contains the model features in the final version of th
 |---|---|
 | Framework | PyTorch |
 | Optimizer | Adam |
-| Learning Rate | 0.001 |
+| Learning Rate | 0.0001 |
 | Kernel Size | 3 x 3 |
 | Batch Size | 32 |
 | Pooling | FractionalPooling, MaxPool2D, Global Average Pooling |
@@ -67,6 +67,12 @@ Note that this table only contains the model features in the final version of th
 | Stratified K-Fold | 5 Folds |
 | Data Augmentation | Random rotation, affine translation, brightness/contrast adjustment |
 | Model Selection | Highest validation macro F1 score |
+
+## Experimental Results
+
+## Conclusions
+
+## Limitations and Future Work
 
 ## Run Instructions
 1) Install the required Python packages:   
