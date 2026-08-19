@@ -309,9 +309,7 @@ def evaluate_detailed(model, loader):
     print("Confusion matrix (rows=true, cols=predicted):")
     print(confusion_matrix(all_labels, all_preds))
 
-# Load the BEST checkpoint, not whatever the model's weights happen to be
-# after the last epoch (epoch 20's weights are probably not the best ones,
-# given val was crashing right up to the end)
+# Load the best validation fold
 best_fold_dict = max(fold_results, key=lambda x: x["best_val_f1"])
 best_model_state = best_fold_dict["best_state"]
 best_val_loader = best_fold_dict["val_loader"]
@@ -319,7 +317,7 @@ best_val_loader = best_fold_dict["val_loader"]
 best_model = AlzheimerCNN(num_classes=4).to(device)
 best_model.load_state_dict(best_model_state)
 
-print("\n=== Best model, evaluated on validation set ===")
+print("\n=== Best model, evaluated on best validation fold ===")
 evaluate_detailed(best_model, best_val_loader)
 
 # Evaluate based on test dataset
@@ -360,7 +358,7 @@ for epoch in range(final_num_epochs):
         train_macro_f1 = evaluate_with_f1(final_model, final_train_eval_loader)
 
         final_scheduler.step(train_loss)
-        
+
         print(f"Epoch {epoch+1}/{final_num_epochs} | "
             f"Train loss: {train_loss:.4f}, acc: {train_acc:.4f}, f1: {train_macro_f1:.4f} | ")
 
