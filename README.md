@@ -46,7 +46,9 @@ flowchart TD
 ```
 
 See the logbook for more details on implementation.
-## Run
+
+## 
+## Run Instructions
 1) Install the required Python packages:   
 pip install -r requirements.txt   
 2) Run the dataset analyzer:    
