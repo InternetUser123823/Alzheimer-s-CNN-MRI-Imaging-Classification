@@ -34,10 +34,10 @@ eval_transform = transforms.Compose([
 ])
 
 # ImageFolder infers labels from subfolder names, same as Keras's image_dataset_from_directory
-full_train = datasets.ImageFolder("original_data/train", transform=train_transform)
+full_train = datasets.ImageFolder("Alzheimer_s Dataset/train", transform=train_transform)
 # Need a non-augmented training set for a loader for consistent F1 score comparison
-full_train_eval = datasets.ImageFolder("original_data/train", transform=eval_transform)
-test_ds = datasets.ImageFolder("original_data/test", transform=eval_transform)
+full_train_eval = datasets.ImageFolder("Alzheimer_s Dataset/train", transform=eval_transform)
+test_ds = datasets.ImageFolder("Alzheimer_s Dataset", transform=eval_transform)
 
 print("Classes:", full_train.classes)  # alphabetical, same indexing caveat as before
 
@@ -169,7 +169,7 @@ skf = StratifiedKFold(
     random_state=42
 )
 
-all_labels = np.array(full_train.targets)  # list, one label per image in original_data/train
+all_labels = np.array(full_train.targets)  # list, one label per image in Alzheimer_s Dataset/train
 # all_indices = list(range(len(full_train)))
 
 fold_results = []
