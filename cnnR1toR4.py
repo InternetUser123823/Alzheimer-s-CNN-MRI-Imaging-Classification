@@ -30,16 +30,16 @@ eval_transform = transforms.Compose([
 ])
 
 # ImageFolder infers labels from subfolder names, same as Keras's image_dataset_from_directory
-full_train = datasets.ImageFolder("original_data/train", transform=train_transform)
+full_train = datasets.ImageFolder("Alzheimer_s Dataset/train", transform=train_transform)
 # Need a non-augmented training set for a loader for consistent F1 score comparison
-full_train_eval = datasets.ImageFolder("original_data/train", transform=eval_transform)
-test_ds = datasets.ImageFolder("original_data/test", transform=eval_transform)
+full_train_eval = datasets.ImageFolder("Alzheimer_s Dataset/train", transform=eval_transform)
+test_ds = datasets.ImageFolder("Alzheimer_s Dataset/test", transform=eval_transform)
 
 print("Classes:", full_train.classes)  # alphabetical, same indexing caveat as before
 
 # Split train into train/val (80/20), reproducibly
 # All labels for the full training folder (not just the current split)
-all_labels = full_train.targets  # list, one label per image in original_data/train
+all_labels = full_train.targets  # list, one label per image in Alzheimer_s Dataset/train
 all_indices = list(range(len(full_train)))
 
 train_idx, val_idx = train_test_split(
@@ -57,7 +57,7 @@ train_eval_ds = torch.utils.data.Subset(full_train_eval, train_idx)
 train_labels = [full_train.targets[i] for i in train_idx]
 
 # Prevent validation set from being augmented
-full_train_eval = datasets.ImageFolder("original_data/train", transform=eval_transform)
+full_train_eval = datasets.ImageFolder("Alzheimer_s Dataset/train", transform=eval_transform)
 val_ds = torch.utils.data.Subset(full_train_eval, val_idx) 
 
 # # Ensure everything is working right
