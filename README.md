@@ -6,7 +6,7 @@ This project investigates the use of convolutional neural networks (CNNs) to cla
 ## Dataset
 The dataset used in this project was obtained from Mendeley Data: "Advancing Alzheimer’s Disease Detection in Clinical Settings: MRI Image Data" by Abu Sufian.
 
-This publicly available dataset contains 6,400 preprocessed MRI images. However, patient-level demographic and clinical information was not available, limiting the ability to account for patient-specific factors in model development and evaluation. A breakdown of the dataset by diagnostic class and split is shown below.
+This publicly available dataset contains 6,400 preprocessed MRI images. However, patient-level demographic and clinical information was unavailable, limiting the ability to account for patient-specific factors during model development and evaluation. Additionally, the substantial class imbalance, particularly the limited number of ModerateDemented images, was taken into consideration during model development and training. A breakdown of the dataset by diagnostic class and split is shown below.
 
 | Class | Training | Test | Total |
 |---|---:|---:|---:|
@@ -15,6 +15,36 @@ This publicly available dataset contains 6,400 preprocessed MRI images. However,
 | MildDemented | 717 | 179 | **896** |
 | ModerateDemented | 52 | 12 | **64** |
 | **Total** | **5,121** | **1,279** | **6,400** |
+
+### Preprocessing
+Before model development, the dataset was programmatically inspected to verify image properties, dimensions, and class distributions (using image_analysis.py). The original images were grayscale JPEGs with dimensions of 208 × 176 pixels. 
+
+### Augmentation
+Before training, images were converted to grayscale and resized to 208 × 176 pixels. Additionally, data augmentation was applied through random rotations, affine translations, and brightness/contrast adjustments. Validation and test images were resized and converted to grayscale without random augmentation.
+
+## Model Architecture
+The project uses a baseline convolutional neural network (CNN) implemented in PyTorch. The full model architecture is shown below.
+
+```mermaid
+flowchart TD
+    A["Input MRI<br/>1 × 208 × 176"]
+    
+    A --> B["Conv Block 1<br/>96 filters<br/>Conv2d → BatchNorm → ReLU → Pool"]
+    B --> C["Conv Block 2<br/>128 filters<br/>Conv2d → BatchNorm → ReLU → Pool"]
+    C --> D["Conv Block 3<br/>256 filters<br/>Conv2d → BatchNorm → ReLU → Pool"]
+    D --> E["AdaptiveAvgPool2d"]
+    E --> F["Conv Block 3<br/>256 filters</br/>Conv2d → BatchNorm → ReLU"]
+  
+    F --> G["Flatten"]
+    G --> H["Fully Connected Layer"]
+    H --> I["4-Class Output"]
+    
+    I --> J["NonDemented"]
+    I --> K["VeryMildDemented"]
+    I --> L["MildDemented"]
+    I --> M["ModerateDemented"]
+```
+
 
 ## Note
 This project was developed as part of my personal learning so I could get more familiar with machine learning models, along with some common ML workflows.
