@@ -45,9 +45,15 @@ flowchart TD
     I --> M["ModerateDemented"]
 ```
 
+See the logbook for more details on implementation.
 ## Run
-Install the required Python packages:
-pip install -r requirements.txt
+1) Install the required Python packages:   
+pip install -r requirements.txt   
+2) Run the dataset analyzer:    
+python3 image_analysis.py
+3) Run the models:      
+python3 cnnR1toR4.py     
+python3 cnnR5.py
 
 ## Note
 This project was developed as part of my personal learning so I could get more familiar with machine learning models, along with some common ML workflows.
