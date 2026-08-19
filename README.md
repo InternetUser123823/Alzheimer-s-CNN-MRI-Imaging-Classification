@@ -45,6 +45,9 @@ flowchart TD
     I --> M["ModerateDemented"]
 ```
 
+## Run
+Install the required Python packages:
+pip install -r requirements.txt
 
 ## Note
 This project was developed as part of my personal learning so I could get more familiar with machine learning models, along with some common ML workflows.
