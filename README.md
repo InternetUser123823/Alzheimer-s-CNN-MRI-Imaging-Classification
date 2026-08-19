@@ -33,10 +33,10 @@ flowchart TD
     B --> C["Conv Block 2<br/>128 filters<br/>Conv2d → BatchNorm → ReLU → Pool"]
     C --> D["Conv Block 3<br/>256 filters<br/>Conv2d → BatchNorm → ReLU → Pool"]
     D --> E["AdaptiveAvgPool2d"]
-    E --> F["Conv Block 3<br/>256 filters</br/>Conv2d → BatchNorm → ReLU"]
+    E --> F["Conv Block 4<br/>256 filters</br/>Conv2d → BatchNorm → ReLU"]
   
     F --> G["Flatten"]
-    G --> H["Fully Connected Layer"]
+    G --> H["Fully Connected Layer<br/>256 filters<br/>Linear → ReLU → Dropout"]
     H --> I["4-Class Output"]
     
     I --> J["NonDemented"]
@@ -47,7 +47,27 @@ flowchart TD
 
 See the logbook for more details on implementation.
 
-## 
+## Model Features
+Note that this table only contains the model features in the final version of the model. For all model features tested, see the logbook.
+
+| Component | Configuration |
+|---|---|
+| Framework | PyTorch |
+| Optimizer | Adam |
+| Learning Rate | 0.001 |
+| Kernel Size | 3 x 3 |
+| Batch Size | 32 |
+| Pooling | FractionalPooling, MaxPool2D, Global Average Pooling |
+| Loss Function | Focal Loss |
+| Class Balancing | Weighted Random Sampling |
+| Learning Rate Scheduler | `ReduceLROnPlateau` |
+| Weight Decay | Applied |
+| Gradient Clipping | Applied |
+| Epochs | 50 |
+| Stratified K-Fold | 5 Folds |
+| Data Augmentation | Random rotation, affine translation, brightness/contrast adjustment |
+| Model Selection | Highest validation macro F1 score |
+
 ## Run Instructions
 1) Install the required Python packages:   
 pip install -r requirements.txt   
