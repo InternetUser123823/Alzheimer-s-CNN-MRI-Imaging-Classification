@@ -69,6 +69,52 @@ Note that this table only contains the model features in the final version of th
 | Model Selection | Highest validation macro F1 score |
 
 ## Experimental Results
+The model was evaluated using 5-fold stratified cross-validation on the training set, followed by a final evaluation on the held-out test set.
+
+*Cross Validation.* Across the five folds, the model achieved a mean macro F1 score of 0.9485 (± 0.0135), with individual fold macro F1 scores ranging from 0.9257 to 0.9609 (see table below). The best-performing fold (Fold 1) achieved a macro F1 of 0.961 on its validation split, with per-class F1 scores of 0.983 (MildDemented), 1.000 (ModerateDemented), 0.944 (NonDemented), and 0.917 (VeryMildDemented). Additionally, the confusion matrix for the best-performing fold, shown below, indicates that the model correctly classified the majority of cases. The majority of misclassified cases consisted of VeryMildDemented cases misclassified as NonDemented (31/359 true cases) and NonDemented cases misclassified as VeryMildDemented (25/512 true cases).
+
+| Fold | Best Epoch | Val Loss | Val Accuracy | Val Macro F1 |
+|------|-----------|----------|---------------|----------------|
+| 1    | 34/50     | 0.0680   | 0.9405        | 0.9609         |
+| 2    | 19/50     | 0.1092   | 0.9062        | 0.9257         |
+| 3    | 40/50     | 0.0656   | 0.9414        | 0.9546         |
+| 4    | 36/50     | 0.0805   | 0.9355        | 0.9489         |
+| 5    | 33/50     | 0.0761   | 0.9346        | 0.9523         |
+
+**Macro F1: 0.9485 ± 0.0135**
+
+*Test Set Evaluation.* The final model — retrained on the full training set for several epochs informed by the cross-validation results — was evaluated once on the held-out test set (n=1,279). This evaluation produced a macro F1 score of 0.568 and an overall accuracy of 0.643, substantially lower than the cross-validation results. Per-class F1 scores on the test set were 0.440 (MildDemented), 0.500 (ModerateDemented), 0.682 (NonDemented), and 0.651 (VeryMildDemented).
+
+The confusion matrix on the test set (as shown below) shows that the majority of MildDemented misclassifications (111 of 179 true cases) were predicted as VeryMildDemented, and a substantial share of NonDemented cases (277 of 640) were also predicted as VeryMildDemented. This pattern was not present to the same degree in the cross-validation results, where confusion was comparatively minor and concentrated between adjacent severity classes.
+
+<table>
+<tr>
+<th>Validation Set (Best Fold)</th>
+<th>Test Set</th>
+</tr>
+<tr>
+<td>
+
+| True \ Pred | Mild | Moderate | Non | VeryMild |
+|---|---|---|---|---|
+| **Mild**     | 142 | 0  | 0   | 2   |
+| **Moderate** | 0   | 10 | 0   | 0   |
+| **Non**      | 2   | 0  | 485 | 25  |
+| **VeryMild** | 1   | 0  | 31  | 327 |
+
+</td>
+<td>
+
+| True \ Pred | Mild | Moderate | Non | VeryMild |
+|---|---|---|---|---|
+| **Mild**     | 53 | 0 | 15  | 111 |
+| **Moderate** | 2  | 4 | 2   | 4   |
+| **Non**      | 3  | 0 | 360 | 277 |
+| **VeryMild** | 4  | 0 | 39  | 405 |
+
+</td>
+</tr>
+</table>
 
 ## Conclusions
 
