@@ -119,7 +119,7 @@ The confusion matrix on the test set (as shown below) shows that the majority of
 ## Conclusions
 
 ## Limitations and Future Work
-One important limitation to note in this project is that there were no associated patient labels with the MRI images. Thus, data leakage may have occurred between classes, especially if multiple brain slices from the same patient have been distributed across the training, validation, and test sets. Additionally, the ModerateDemented class in this dataset was extremely small, only containing 64 images in total. Thus, data augmentation was especially important for the model to increase the diversity of training examples and reduce the risk of overfitting.
+One important limitation to note in this project is that there were no associated patient labels with the MRI images. Thus, data leakage may have occurred between classes, especially if multiple brain slices from the same patient have been distributed across the training, validation, and test sets. Additionally, the ModerateDemented class in this dataset was extremely small, only containing 64 images in total. Thus, data augmentation was especially important for the model to increase the diversity of training examples and reduce the risk of overfitting. Although 
 ## Run Instructions
 1) Install the required Python packages:   
 pip install -r requirements.txt   
