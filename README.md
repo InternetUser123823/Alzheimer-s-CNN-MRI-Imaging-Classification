@@ -69,52 +69,36 @@ Note that this table only contains the model features in the final version of th
 | Model Selection | Highest validation macro F1 score |
 
 ## Experimental Results
-The model was evaluated using 5-fold stratified cross-validation on the training set, followed by a final evaluation on the held-out test set.
+The model was evaluated using 5-fold stratified cross-validation on the training set, followed by a final evaluation on the held-out test set. Five different random seeds were applied to an independent train/test dataset split, resulting in the table below:
 
-*Cross Validation.* Across the five folds, the model achieved a mean macro F1 score of 0.9485 (± 0.0135), with individual fold macro F1 scores ranging from 0.9257 to 0.9609 (see table below). The best-performing fold (Fold 1) achieved a macro F1 of 0.961 on its validation split, with per-class F1 scores of 0.983 (MildDemented), 1.000 (ModerateDemented), 0.944 (NonDemented), and 0.917 (VeryMildDemented). Additionally, the confusion matrix for the best-performing fold, shown below, indicates that the model correctly classified the majority of cases. The majority of misclassified cases consisted of VeryMildDemented cases misclassified as NonDemented (31/359 true cases) and NonDemented cases misclassified as VeryMildDemented (25/512 true cases).
+### Random Seed Robustness
 
-| Fold | Best Epoch | Val Loss | Val Accuracy | Val Macro F1 |
-|------|-----------|----------|---------------|----------------|
-| 1    | 34/50     | 0.0680   | 0.9405        | 0.9609         |
-| 2    | 19/50     | 0.1092   | 0.9062        | 0.9257         |
-| 3    | 40/50     | 0.0656   | 0.9414        | 0.9546         |
-| 4    | 36/50     | 0.0805   | 0.9355        | 0.9489         |
-| 5    | 33/50     | 0.0761   | 0.9346        | 0.9523         |
+| Seed |     CV Macro F1 | Test Macro F1 |
+| ---: | --------------: | ------------: |
+|   42 | 0.9203 ± 0.0239 |     **0.768** |
+|  123 | 0.8751 ± 0.0241 |     **0.720** |
+|  456 | 0.8519 ± 0.1146 |     **0.329** |
+|  789 | 0.8601 ± 0.0923 |     **0.428** |
+| 2026 | 0.8347 ± 0.0709 |     **0.840** |
 
-**Macro F1: 0.9485 ± 0.0135**
+*Cross-validation.* Across the five random seeds, the model achieved a mean macro validation F1 score of 0.8684 ± 0.0325 (see table above). The best-performing seed (Seed 42) achieved a mean macro validation F1 of 0.9203, while the worst-performing seed (Seed 2026) achieved a mean macro validation F1 of 0.8347. Additionally, observing the best fold's confusion matrix from each seed (see Logbook) indicates that the model correctly classified the majority of cases. The majority of misclassified cases consisted of VeryMildDemented cases misclassified as NonDemented and NonDemented cases misclassified as VeryMildDemented.
 
-*Test Set Evaluation.* The final model — retrained on the full training set for several epochs informed by the cross-validation results — was evaluated once on the held-out test set (n=1,279). This evaluation produced a macro F1 score of 0.568 and an overall accuracy of 0.643, substantially lower than the cross-validation results. Per-class F1 scores on the test set were 0.440 (MildDemented), 0.500 (ModerateDemented), 0.682 (NonDemented), and 0.651 (VeryMildDemented).
+*Test Set Evaluation.* Across the five random seeds, the final models — retrained on the full training set for several epochs informed by the cross-validation results — were evaluated once on the held-out test set (n=1,279). This evaluation produced a mean macro test F1 score of 0.6170 ± 0.2246, substantially lower than the cross-validation results with a wider variance. Per-class F1 scores on the test set were 0.440 (MildDemented), 0.500 (ModerateDemented), 0.682 (NonDemented), and 0.651 (VeryMildDemented). Additionally, the confusion matrix on the test set (as shown below) demonstrates where the model made notable errors in misclassification; for example, in seed 456, the model misclassified a majority of VeryMildDemented images as ModerateDemented images, and in seed 789, the model misclassified a majority of VeryMildDemented images as NonDemented images. This pattern was not present to the same degree in the cross-validation results, where confusion was comparatively minor and concentrated between adjacent severity classes.
 
-The confusion matrix on the test set (as shown below) shows that the majority of MildDemented misclassifications (111 of 179 true cases) were predicted as VeryMildDemented, and a substantial share of NonDemented cases (277 of 640) were also predicted as VeryMildDemented. This pattern was not present to the same degree in the cross-validation results, where confusion was comparatively minor and concentrated between adjacent severity classes.
+### Test Confusion Matrices
 
-<table>
-<tr>
-<th>Validation Set (Best Fold)</th>
-<th>Test Set</th>
-</tr>
-<tr>
-<td>
+Rows = true class, columns = predicted class.
+Class order: **MildDemented, ModerateDemented, NonDemented, VeryMildDemented**
 
-| True \ Pred | Mild | Moderate | Non | VeryMild |
-|---|---|---|---|---|
-| **Mild**     | 142 | 0  | 0   | 2   |
-| **Moderate** | 0   | 10 | 0   | 0   |
-| **Non**      | 2   | 0  | 485 | 25  |
-| **VeryMild** | 1   | 0  | 31  | 327 |
+| Seed 42                                                                                | Seed 123                                                                                | Seed 456                                                                                  |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `[[115, 0, 30, 35],`<br>` [0, 4, 8, 1],`<br>` [0, 0, 617, 23],`<br>` [2, 0, 33, 413]]` | `[[179, 0, 1, 0],`<br>` [6, 7, 0, 0],`<br>` [60, 0, 562, 18],`<br>` [121, 0, 97, 230]]` | `[[7, 172, 1, 0],`<br>` [0, 13, 0, 0],`<br>` [0, 242, 363, 35],`<br>` [0, 276, 14, 158]]` |
+| **F1: 0.768**                                                                          | **F1: 0.720**                                                                           | **F1: 0.329**                                                                             |
 
-</td>
-<td>
-
-| True \ Pred | Mild | Moderate | Non | VeryMild |
-|---|---|---|---|---|
-| **Mild**     | 53 | 0 | 15  | 111 |
-| **Moderate** | 2  | 4 | 2   | 4   |
-| **Non**      | 3  | 0 | 360 | 277 |
-| **VeryMild** | 4  | 0 | 39  | 405 |
-
-</td>
-</tr>
-</table>
+| Seed 789                                                                             | Seed 2026                                                                                |
+| ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `[[29, 5, 146, 0],`<br>` [0, 12, 1, 0],`<br>` [0, 0, 640, 0],`<br>` [0, 3, 440, 5]]` | `[[173, 0, 5, 2],`<br>` [1, 12, 0, 0],`<br>` [16, 0, 610, 14],`<br>` [57, 0, 134, 257]]` |
+| **F1: 0.428**                                                                        | **F1: 0.840**                                                                            |
 
 ## Conclusions
 
