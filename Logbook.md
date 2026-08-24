@@ -215,5 +215,188 @@
 
 - The large abnormal gap between the validation F1 score and the test F1 score indicated that the model generalized poorly from the training and validation sets to the test set.
 - Because the training and validation F1 scores did not differ substantially, the results may suggest differences between the training/validation and test data distributions or other dataset characteristics that affected generalization, such as multiple scans belonging to the same patient.
-- Further work should focus on using OASIS data so that patient characteristics can also be considered.
-- Transfer learning could also be implemented to enhance the model's capability in classifying different stages of Alzheimer's disease.
+
+## Version 6
+
+### Changes
+
+* Implemented a program called `create_split.py` which independently and randomly splits the MRI images into either the test or training set.
+
+> **Note:** To see detailed results of the independent split originating from seed 42, see the last CNN version.
+
+### Seed 42
+
+**Best Validation Stats for Each Fold:**
+
+* Fold 1: Best Macro F1 = 0.9032
+* Fold 2: Best Macro F1 = 0.8979
+* Fold 3: Best Macro F1 = 0.9087
+* Fold 4: Best Macro F1 = 0.9510
+* Fold 5: Best Macro F1 = 0.9406
+
+**Macro Val F1:** 0.9203 ± 0.0239
+
+**Best Fold Confusion Matrix (rows = true, columns = predicted):**
+
+|                 | Mild | Moderate | NonDemented | VeryMild |
+| --------------- | ---: | -------: | ----------: | -------: |
+| **Mild**        |  130 |        0 |           2 |       11 |
+| **Moderate**    |    0 |       10 |           0 |        0 |
+| **NonDemented** |    2 |        0 |         487 |       23 |
+| **VeryMild**    |    2 |        0 |          25 |      332 |
+
+**Macro Test F1:** 0.768
+
+**Test Confusion Matrix (rows = true, columns = predicted):**
+
+|                 | Mild | Moderate | NonDemented | VeryMild |
+| --------------- | ---: | -------: | ----------: | -------: |
+| **Mild**        |  115 |        0 |          30 |       35 |
+| **Moderate**    |    0 |        4 |           8 |        1 |
+| **NonDemented** |    0 |        0 |         617 |       23 |
+| **VeryMild**    |    2 |        0 |          33 |      413 |
+
+---
+
+### Seed 123
+
+**Best Validation Stats for Each Fold:**
+
+* Fold 1: Best Macro F1 = 0.8652
+* Fold 2: Best Macro F1 = 0.9166
+* Fold 3: Best Macro F1 = 0.8587
+* Fold 4: Best Macro F1 = 0.8747
+* Fold 5: Best Macro F1 = 0.8601
+
+**Macro Val F1:** 0.8751 ± 0.0241
+
+**Best Fold Confusion Matrix (rows = true, columns = predicted):**
+
+|                 | Mild | Moderate | NonDemented | VeryMild |
+| --------------- | ---: | -------: | ----------: | -------: |
+| **Mild**        |  136 |        0 |           2 |        5 |
+| **Moderate**    |    1 |       10 |           0 |        0 |
+| **NonDemented** |    5 |        0 |         486 |       21 |
+| **VeryMild**    |   10 |        0 |          53 |      295 |
+
+**Macro Test F1:** 0.720
+
+**Test Confusion Matrix (rows = true, columns = predicted):**
+
+|                 | Mild | Moderate | NonDemented | VeryMild |
+| --------------- | ---: | -------: | ----------: | -------: |
+| **Mild**        |  179 |        0 |           1 |        0 |
+| **Moderate**    |    6 |        7 |           0 |        0 |
+| **NonDemented** |   60 |        0 |         562 |       18 |
+| **VeryMild**    |  121 |        0 |          97 |      230 |
+
+---
+
+### Seed 456
+
+**Best Validation Stats for Each Fold:**
+
+* Fold 1: Best Macro F1 = 0.9244
+* Fold 2: Best Macro F1 = 0.6933
+* Fold 3: Best Macro F1 = 0.9552
+* Fold 4: Best Macro F1 = 0.9183
+* Fold 5: Best Macro F1 = 0.7681
+
+**Macro Val F1:** 0.8519 ± 0.1146
+
+**Best Fold Confusion Matrix (rows = true, columns = predicted):**
+
+|                 | Mild | Moderate | NonDemented | VeryMild |
+| --------------- | ---: | -------: | ----------: | -------: |
+| **Mild**        |  134 |        0 |           2 |        7 |
+| **Moderate**    |    0 |       10 |           0 |        0 |
+| **NonDemented** |    0 |        0 |         487 |       25 |
+| **VeryMild**    |    3 |        0 |          26 |      330 |
+
+**Macro Test F1:** 0.329
+
+**Test Confusion Matrix (rows = true, columns = predicted):**
+
+|                 | Mild | Moderate | NonDemented | VeryMild |
+| --------------- | ---: | -------: | ----------: | -------: |
+| **Mild**        |    7 |      172 |           1 |        0 |
+| **Moderate**    |    0 |       13 |           0 |        0 |
+| **NonDemented** |    0 |      242 |         363 |       35 |
+| **VeryMild**    |    0 |      276 |          14 |      158 |
+
+---
+
+### Seed 789
+
+**Best Validation Stats for Each Fold:**
+
+* Fold 1: Best Macro F1 = 0.7667
+* Fold 2: Best Macro F1 = 0.9158
+* Fold 3: Best Macro F1 = 0.7536
+* Fold 4: Best Macro F1 = 0.9155
+* Fold 5: Best Macro F1 = 0.9488
+
+**Macro Val F1:** 0.8601 ± 0.0923
+
+**Best Fold Confusion Matrix (rows = true, columns = predicted):**
+
+|                 | Mild | Moderate | NonDemented | VeryMild |
+| --------------- | ---: | -------: | ----------: | -------: |
+| **Mild**        |  136 |        1 |           3 |        3 |
+| **Moderate**    |    0 |       10 |           0 |        0 |
+| **NonDemented** |    2 |        0 |         486 |       24 |
+| **VeryMild**    |    1 |        0 |          23 |      334 |
+
+**Macro Test F1:** 0.428
+
+**Test Confusion Matrix (rows = true, columns = predicted):**
+
+|                 | Mild | Moderate | NonDemented | VeryMild |
+| --------------- | ---: | -------: | ----------: | -------: |
+| **Mild**        |   29 |        5 |         146 |        0 |
+| **Moderate**    |    0 |       12 |           1 |        0 |
+| **NonDemented** |    0 |        0 |         640 |        0 |
+| **VeryMild**    |    0 |        3 |         440 |        5 |
+
+---
+
+### Seed 2026
+
+**Best Validation Stats for Each Fold:**
+
+* Fold 1: Best Macro F1 = 0.8913
+* Fold 2: Best Macro F1 = 0.7229
+* Fold 3: Best Macro F1 = 0.8229
+* Fold 4: Best Macro F1 = 0.8998
+* Fold 5: Best Macro F1 = 0.8365
+
+**Macro Val F1:** 0.8347 ± 0.0709
+
+**Best Fold Confusion Matrix (rows = true, columns = predicted):**
+
+|                 | Mild | Moderate | NonDemented | VeryMild |
+| --------------- | ---: | -------: | ----------: | -------: |
+| **Mild**        |  132 |        0 |           6 |        5 |
+| **Moderate**    |    0 |       10 |           0 |        0 |
+| **NonDemented** |    2 |        0 |         485 |       25 |
+| **VeryMild**    |   12 |        0 |          89 |      258 |
+
+**Macro Test F1:** 0.840
+
+**Test Confusion Matrix (rows = true, columns = predicted):**
+
+|                 | Mild | Moderate | NonDemented | VeryMild |
+| --------------- | ---: | -------: | ----------: | -------: |
+| **Mild**        |  173 |        0 |           5 |        2 |
+| **Moderate**    |    1 |       12 |           0 |        0 |
+| **NonDemented** |   16 |        0 |         610 |       14 |
+| **VeryMild**    |   57 |        0 |         134 |      257 |
+
+---
+
+### Conclusions
+
+* The large variability in test F1 scores across the different seeds could potentially be explained by the aggressive combination of the sampler and the focal loss implementation. Although the training and test datasets are both stratified, the weighted sampler does not guarantee that every image is selected for training. Thus, certain images may have been overlooked by the model. This phenomenon may have been exacerbated by the focal loss implementation, encouraging the model to focus on harder images presented to the model while potentially underemphasizing other images.
+* Further work should focus on using OASIS data so that patient characteristics could also be considered. Transfer learning could also be implemented to enhance the model's capability in classifying different stages of Alzheimer's disease.
+
+  
