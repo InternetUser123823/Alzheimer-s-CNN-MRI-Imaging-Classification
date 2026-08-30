@@ -222,7 +222,9 @@
 ### Changes
 
 * Implemented a program called `create_split.py` which independently and randomly splits the MRI images into either the test or training set.
-
+* 
+> **Note:** Macro F1 scores were used to give equal importance to each class, as the extreme class imbalance would cause the majority NonDemented class to have a disproportionately large influence on the overall score if weighted F1 were used.
+>  
 > **Note:** To see detailed results of the independent split originating from seed 42, see the last CNN version.
 
 ### Seed 42
