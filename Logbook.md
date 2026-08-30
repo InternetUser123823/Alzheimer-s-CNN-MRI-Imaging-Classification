@@ -14,7 +14,7 @@
 `Epoch 14/20 | Train loss: 1.4061, acc: 0.3444 | Val loss: 1.3544, acc: 0.5010`
 
 ### Conclusions
-- Suspected that the model predicts the majority class most of the time.
+- Low validation accuracy suggested that the model was not reliably distinguishing the different classes.
 - This could be due to too-aggressive class weights combined with a too-high learning rate, which could contribute to large, destabilizing gradient updates when a ModerateDemented image is included in a batch and processed.
 
 ---
@@ -141,6 +141,7 @@
 
 ### Changes
 
+- Created a new version of the program called cnnR5.py.
 - Added early stopping so that if validation F1 did not increase within seven consecutive epochs, model training would stop.
 - Implemented k-fold validation. Thus, validation F1 scores would be more reliable across different validation splits rather than based on only one split.
 - Tested the following modifications separately. Modifications with an asterisk (`*`) substantially improved validation F1 scores and were implemented in the final version:
