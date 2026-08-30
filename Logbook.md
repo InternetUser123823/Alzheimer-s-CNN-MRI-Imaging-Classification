@@ -149,7 +149,7 @@
   - Removed jitter from augmentation: variation in brightness and contrast caused by jitter could have concealed or altered subtle differences between VeryMildDemented and NonDemented.
   - Focal loss*: the model's differentiation between VeryMildDemented and NonDemented could benefit from increasing loss associated with more challenging images and reducing loss associated with easier images.
   - Added one more block*: added a 256-filter block with no pooling after the third block. This gave the model greater capacity to learn higher-level and more abstract features, which could help distinguish subtle visual differences between VeryMildDemented and NonDemented images.
-  - Implemented adaptive max pooling: allowed feature maps to be downsampled more gradually, retaining more spatial information and potentially preserving subtle features while avoiding the computational and memory demands of maintaining larger feature maps.
+  - Implemented adaptive max pooling*: allowed feature maps to be downsampled more gradually, retaining more spatial information and potentially preserving subtle features while avoiding the computational and memory demands of maintaining larger feature maps.
 - Added the previously unseen testing set for evaluation such that the model performance could be reliably gauged at the end; additionally, implemented a variable epoch count based on the average of the sum of epochs it takes for all folds.
   
 ### Cross-Validation Result
